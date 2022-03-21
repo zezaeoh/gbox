@@ -11,7 +11,7 @@ func init() {
 }
 
 var setCmd = &cobra.Command{
-	Use:   "set [name]",
+	Use:   "set name",
 	Short: "Set current storage",
 	Args:  cobra.ExactValidArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
