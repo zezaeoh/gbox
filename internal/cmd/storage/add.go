@@ -120,6 +120,7 @@ var addCmd = &cobra.Command{
 				return
 			}
 
+			// add storage to config file and save
 			cfg.AddStorage(ans.Name, ans.Kind, s)
 			if err := cfg.Save(); err != nil {
 				log.Errorf("Fail to save config: %s", err)
