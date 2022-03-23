@@ -36,6 +36,8 @@ func (s *spec) validate() error {
 		return errors.New("url required")
 	}
 	switch s.AuthType {
+	case "":
+		return nil
 	case "https":
 		if len(s.Token) == 0 {
 			return errors.New("token required")

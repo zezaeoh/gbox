@@ -13,13 +13,15 @@ const (
 	defaultConfigFile = "config.yaml"
 )
 
+type storageConfig struct {
+	Name string                 `yaml:"name"`
+	Kind string                 `yaml:"kind"`
+	Spec map[string]interface{} `yaml:"spec"`
+}
+
 type config struct {
-	CurrentStorage string `yaml:"currentStorage"`
-	Storages       []*struct {
-		Name string                 `yaml:"name"`
-		Kind string                 `yaml:"kind"`
-		Spec map[string]interface{} `yaml:"spec"`
-	} `yaml:"storages"`
+	CurrentStorage string           `yaml:"currentStorage"`
+	Storages       []*storageConfig `yaml:"storages"`
 }
 
 var _config *config
@@ -118,8 +120,19 @@ func (cfg *config) Save() error {
 		return err
 	}
 
-	if err := ioutil.WriteFile(configDir, d, 0); err != nil {
+	if err := ioutil.WriteFile(configDir, d, 0644); err != nil {
 		return err
 	}
 	return nil
+}
+
+func (cfg *config) AddStorage(n, k string, s map[string]interface{}) {
+	cfg.Storages = append(cfg.Storages, &storageConfig{
+		Name: n,
+		Kind: k,
+		Spec: s,
+	})
+	if len(cfg.CurrentStorage) == 0 {
+		cfg.CurrentStorage = n
+	}
 }
