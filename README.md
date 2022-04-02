@@ -4,6 +4,20 @@
 
 ## Installation
 
+To download the latest release, run:
+
+```bash
+curl --silent --location "https://github.com/zezaeoh/gbox/releases/latest/download/gbox_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/gbox /usr/local/bin
+```
+
+For ARM system, please change ARCH (e.g. armv6, armv7 or arm64) accordingly
+
+```bash
+curl --silent --location "https://github.com/zezaeoh/gbox/releases/latest/download/gbox_$(uname -s)_arm64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/gbox /usr/local/bin
+```
+
 macOS users can use [Homebrew](https://brew.sh):
 
 ```bash
