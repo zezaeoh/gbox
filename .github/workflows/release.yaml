@@ -1,13 +1,13 @@
-name: "Release gbox cli"
+name: Release gbox cli
 
 on:
   release:
     types:
-      - "published"
+      - published
 
 jobs:
   run_goreleaser:
-    name: "Goreleaser Release"
+    name: Goreleaser Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
