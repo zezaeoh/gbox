@@ -17,3 +17,4 @@ vendor/
 # IDE
 .idea
 .DS_Store
+gbox

@@ -77,6 +77,13 @@ var addCmd = &cobra.Command{
 					return nil
 				},
 			}, {
+				Name: "branch",
+				Prompt: &survey.Input{
+					Message: "Repository Branch",
+					Help:    "Branch of your repository to use",
+				},
+				Validate: survey.Required,
+			}, {
 				Name: "authType",
 				Prompt: &survey.Select{
 					Message: "Authentication method",

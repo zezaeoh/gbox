@@ -1,20 +1,20 @@
 package cmd
 
 import (
+	"github.com/shivamMg/ppds/tree"
 	"github.com/spf13/cobra"
 	"github.com/zezaeoh/gbox/internal/logger"
 	"github.com/zezaeoh/gbox/internal/storage"
 )
 
 func init() {
-	rootCmd.AddCommand(setCmd)
+	rootCmd.AddCommand(listCmd)
 }
 
-var setCmd = &cobra.Command{
-	Use:     "set name data",
-	Short:   "Set data to storage",
-	Aliases: []string{"s"},
-	Args:    cobra.ExactValidArgs(2),
+var listCmd = &cobra.Command{
+	Use:     "list",
+	Aliases: []string{"ls", "l"},
+	Short:   "List storage data",
 	Run: func(cmd *cobra.Command, args []string) {
 		log := logger.Logger()
 
@@ -24,13 +24,12 @@ var setCmd = &cobra.Command{
 			return
 		}
 
-		name := args[0]
-		data := args[1]
-
-		if err := stg.Set(name, data); err != nil {
-			log.Errorf("Fail to set data: %s", err)
+		data, err := stg.List()
+		if err != nil {
+			log.Errorf("Fail to list data: %s", err)
 			return
 		}
-		log.Infof("Set: %s", name)
+
+		tree.PrintHrn(data)
 	},
 }

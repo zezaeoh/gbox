@@ -3,14 +3,15 @@ package storage
 import (
 	"errors"
 	"fmt"
+	"github.com/shivamMg/ppds/tree"
 	"github.com/zezaeoh/gbox/internal/storage/github"
 )
 
 type Storage interface {
-	Get() (string, error)
-	Set(dir string) error
-	Delete(dir string) error
-	List() (map[string]interface{}, error)
+	Get(name string) (string, error)
+	Set(name, data string) error
+	Delete(name string) error
+	List() (tree.Node, error)
 }
 
 var (

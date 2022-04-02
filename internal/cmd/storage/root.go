@@ -9,7 +9,7 @@ var Cmd = rootCmd
 
 var rootCmd = &cobra.Command{
 	Use:     "storage",
-	Aliases: []string{"s", "stg"},
+	Aliases: []string{"stg"},
 	Short:   "Get, Set storage configuration of gbox",
 	Args:    cobra.MinimumNArgs(1),
 }

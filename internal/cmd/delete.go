@@ -7,14 +7,14 @@ import (
 )
 
 func init() {
-	rootCmd.AddCommand(setCmd)
+	rootCmd.AddCommand(deleteCmd)
 }
 
-var setCmd = &cobra.Command{
-	Use:     "set name data",
-	Short:   "Set data to storage",
-	Aliases: []string{"s"},
-	Args:    cobra.ExactValidArgs(2),
+var deleteCmd = &cobra.Command{
+	Use:     "delete name",
+	Short:   "Delete data from storage",
+	Aliases: []string{"d"},
+	Args:    cobra.ExactValidArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		log := logger.Logger()
 
@@ -25,12 +25,11 @@ var setCmd = &cobra.Command{
 		}
 
 		name := args[0]
-		data := args[1]
 
-		if err := stg.Set(name, data); err != nil {
-			log.Errorf("Fail to set data: %s", err)
+		if err := stg.Delete(name); err != nil {
+			log.Errorf("Fail to delete data: %s", err)
 			return
 		}
-		log.Infof("Set: %s", name)
+		log.Infof("Delete: %s", name)
 	},
 }
