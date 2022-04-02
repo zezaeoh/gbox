@@ -1,4 +1,3 @@
-
 test: tidy
 	go test -v ./...
 
