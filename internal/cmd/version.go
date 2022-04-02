@@ -15,6 +15,6 @@ var versionCmd = &cobra.Command{
 	Short: "Print version of gbox cli",
 	Run: func(cmd *cobra.Command, args []string) {
 		log := logger.Logger()
-		log.Infof("GBox Version = %s", common.GetVersion())
+		log.Infof("Gbox Version = %s", common.GetVersion())
 	},
 }

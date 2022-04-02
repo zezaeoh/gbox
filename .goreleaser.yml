@@ -29,3 +29,20 @@ changelog:
       - "README"
       - Merge pull request
       - Merge branch
+brews:
+  - name: gbox
+    goarm: 6
+    tap:
+      owner: zezaeoh
+      name: homebrew-gbox
+    commit_author:
+      name: zezaeoh
+      email: zezaeoh@gmail.com
+    folder: Formula
+    homepage: https://github.com/zezaeoh/gbox
+    description: Gbox - use github as storage
+    license: "MIT"
+    install: |
+      bin.install "gbox"
+    test: |
+      system "gbox version"
