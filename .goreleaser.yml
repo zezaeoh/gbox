@@ -8,7 +8,7 @@ builds:
     goos:
       - linux
       - darwin
-    main: ./cmd/main
+    main: ./cmd
     binary: gbox
     ldflags:
       - -X 'github.com/zezaeoh/gbox/internal/common.Version={{ .Version }}'
