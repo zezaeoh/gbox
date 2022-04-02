@@ -2,36 +2,36 @@ before:
   hooks:
     - go mod tidy
     - go mod download
+
 builds:
   - env:
       - CGO_ENABLED=0
-    goos:
-      - linux
-      - darwin
     main: ./cmd
     binary: gbox
     ldflags:
       - -X 'github.com/zezaeoh/gbox/internal/common.Version={{ .Version }}'
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+      - arm
+    goarm:
+      - 6
+      - 7
+
 archives:
   - replacements:
       darwin: Darwin
       linux: Linux
-      386: i386
-      amd64: x86_64
+    name_template: "gbox_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
+
 checksum:
   name_template: "checksums.txt"
-changelog:
-  sort: asc
-  filters:
-    exclude:
-      - "^docs:"
-      - "^test:"
-      - "README"
-      - Merge pull request
-      - Merge branch
+
 brews:
   - name: gbox
-    goarm: 6
     tap:
       owner: zezaeoh
       name: homebrew-gbox
