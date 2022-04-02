@@ -19,8 +19,9 @@ type Storage struct {
 const gboxSuffix = ".gbox"
 
 var (
-	invalidName = fmt.Errorf("invalid name for secret")
-	keyNotFound = errors.New("key not found")
+	invalidName  = fmt.Errorf("invalid name for secret")
+	keyNotFound  = errors.New("key not found")
+	emptyStorage = errors.New("storage empty")
 )
 
 func NewStorage(m map[string]interface{}) (*Storage, error) {
@@ -122,14 +123,24 @@ func (s *Storage) List() (tree.Node, error) {
 		return nil, err
 	}
 
-	b, _, err := client.Repositories.GetBranch(ctx, s.spec.owner, s.spec.repo, s.spec.Branch, true)
+	b, res, err := client.Repositories.GetBranch(ctx, s.spec.owner, s.spec.repo, s.spec.Branch, true)
 	if err != nil {
-		return nil, err
+		if res == nil {
+			return nil, err
+		}
+		if res.StatusCode == http.StatusNotFound {
+			return nil, emptyStorage
+		}
 	}
 
-	t, _, err := client.Git.GetTree(ctx, s.spec.owner, s.spec.repo, b.GetCommit().GetSHA(), true)
+	t, res, err := client.Git.GetTree(ctx, s.spec.owner, s.spec.repo, b.GetCommit().GetSHA(), true)
 	if err != nil {
-		return nil, err
+		if res == nil {
+			return nil, err
+		}
+		if res.StatusCode == http.StatusNotFound {
+			return nil, emptyStorage
+		}
 	}
 
 	return gitTreeToNode(t)
