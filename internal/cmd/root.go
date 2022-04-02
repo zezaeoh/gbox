@@ -11,7 +11,7 @@ func init() {
 
 var rootCmd = &cobra.Command{
 	Use:   "gbox",
-	Short: "GBox is simple storage cli using github as storage 📦",
+	Short: "Gbox is simple storage cli using github as storage 📦",
 	Args:  cobra.MinimumNArgs(1),
 }
 
