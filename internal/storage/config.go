@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 const (
@@ -135,4 +136,14 @@ func (cfg *config) AddStorage(n, k string, s map[string]interface{}) {
 	if len(cfg.CurrentStorage) == 0 {
 		cfg.CurrentStorage = n
 	}
+}
+
+func (cfg *config) GetMatchedStorage(toMatched string) []string {
+	var matched []string
+	for _, s := range cfg.Storages {
+		if strings.HasPrefix(s.Name, toMatched) {
+			matched = append(matched, s.Name)
+		}
+	}
+	return matched
 }

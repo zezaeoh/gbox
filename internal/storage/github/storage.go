@@ -146,6 +146,38 @@ func (s *Storage) List() (tree.Node, error) {
 	return gitTreeToNode(t)
 }
 
+func (s *Storage) GetMatched(toMatched string) []string {
+	var matched []string
+
+	ctx := context.Background()
+	client := s.getClient()
+
+	if err := s.checkRepoExist(); err != nil {
+		return matched
+	}
+
+	b, _, err := client.Repositories.GetBranch(ctx, s.spec.owner, s.spec.repo, s.spec.Branch, true)
+	if err != nil {
+		return matched
+	}
+
+	t, _, err := client.Git.GetTree(ctx, s.spec.owner, s.spec.repo, b.GetCommit().GetSHA(), true)
+	if err != nil {
+		return matched
+	}
+
+	for _, e := range t.Entries {
+		if e.GetType() == "blob" && strings.HasSuffix(e.GetPath(), gboxSuffix) {
+			name := e.GetPath()
+			name = name[:len(name)-len(gboxSuffix)]
+			if strings.HasPrefix(name, toMatched) {
+				matched = append(matched, name)
+			}
+		}
+	}
+	return matched
+}
+
 func (s *Storage) checkRepoExist() error {
 	ctx := context.Background()
 	client := s.getClient()

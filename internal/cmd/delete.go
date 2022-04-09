@@ -32,4 +32,16 @@ var deleteCmd = &cobra.Command{
 		}
 		log.Infof("Delete: %s", name)
 	},
+	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+		if len(args) != 0 {
+			return nil, cobra.ShellCompDirectiveNoFileComp
+		}
+
+		stg, err := storage.GetStorage()
+		if err != nil {
+			return nil, cobra.ShellCompDirectiveNoFileComp
+		}
+
+		return stg.GetMatched(toComplete), cobra.ShellCompDirectiveNoFileComp
+	},
 }

@@ -43,4 +43,16 @@ var setCmd = &cobra.Command{
 		}
 		log.Infof("Storage Configured: %s", name)
 	},
+	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+		if len(args) != 0 {
+			return nil, cobra.ShellCompDirectiveNoFileComp
+		}
+
+		cfg, err := storage.GetConfig()
+		if err != nil {
+			return nil, cobra.ShellCompDirectiveNoFileComp
+		}
+
+		return cfg.GetMatchedStorage(toComplete), cobra.ShellCompDirectiveNoFileComp
+	},
 }

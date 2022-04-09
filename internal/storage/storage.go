@@ -12,6 +12,7 @@ type Storage interface {
 	Set(name, data string) error
 	Delete(name string) error
 	List() (tree.Node, error)
+	GetMatched(toMatched string) []string
 }
 
 var (
