@@ -24,3 +24,5 @@ macOS users can use [Homebrew](https://brew.sh):
 brew tap zezaeoh/gbox
 brew install gbox
 ```
+
+## Getting started

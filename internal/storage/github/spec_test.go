@@ -47,6 +47,58 @@ func Test_wrapSpec(t *testing.T) {
 			},
 			wantErr: true,
 		},
+		{
+			name: "need url",
+			spec: map[string]interface{}{
+				"branch":   "main",
+				"authType": "https",
+			},
+			wantErr: true,
+		},
+		{
+			name: "need branch",
+			spec: map[string]interface{}{
+				"url":      "https://github.com/zezaeoh/gbox-test",
+				"authType": "https",
+			},
+			wantErr: true,
+		},
+		{
+			name: "unknown auth type",
+			spec: map[string]interface{}{
+				"url":      "https://github.com/zezaeoh/gbox-test",
+				"branch":   "main",
+				"authType": "test",
+			},
+			wantErr: true,
+		},
+		{
+			name: "invalid url 01",
+			spec: map[string]interface{}{
+				"url":      "https://zezaeoh.io/zezaeoh/gbox-test",
+				"branch":   "main",
+				"authType": "https",
+			},
+			wantErr: true,
+		},
+		{
+			name: "invalid url 02",
+			spec: map[string]interface{}{
+				"url":      "https://github.com/zezaeoh",
+				"branch":   "main",
+				"authType": "https",
+			},
+			wantErr: true,
+		},
+		{
+			name: "invalid url 03",
+			spec: map[string]interface{}{
+				"url":      "https://github.com/zezaeoh/gbox-test/gg",
+				"branch":   "main",
+				"authType": "https",
+			},
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
